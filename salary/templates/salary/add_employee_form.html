@@ -1,0 +1,25 @@
+{% extends 'salary/base.html' %}
+
+{% block title %} Добавить сотрудника {% endblock %}
+
+{% block content %}
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.first_name.label_tag }}<br>
+    {{ form.first_name }}<br>
+    {{ form.last_name.label_tag }}<br>
+    {{ form.last_name }}<br>
+    {{ form.post_name.label_tag }}<br>
+    {{ form.post_name }}<br>
+    {{ form.department_id.label_tag }}<br>
+    {{ form.department_id }}<br>
+    {{ form.comment.label_tag }}<br>
+    {{ form.comment }}<br>
+    {{ form.status.label_tag }}<br>
+    {{ form.status }}<br>
+    {{ form.date_admission.label_tag }}<br>
+    {{ form.date_admission }}<br>
+    <button> Добавить сотрудника </button>
+  </form>
+
+{% endblock %}

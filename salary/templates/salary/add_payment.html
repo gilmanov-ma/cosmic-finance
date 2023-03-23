@@ -1,0 +1,23 @@
+{% extends 'salary/base.html' %}
+
+{% block title %} Добавить выплату {% endblock %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form.date_time.label_tag }}<br>
+    {{ form.date_time }}<br>
+    {{ form.payment.label_tag }}<br>
+    {{ form.payment }}<br>
+    {{ form.employee_id.label_tag }}<br>
+    {{ form.employee_id }}<br>
+    {{ form.comment.label_tag }}<br>
+    {{ form.comment }}<br>
+    {{ form.link.label_tag }}<br>
+    {{ form.link }}<br>
+    {{ form.status.label_tag }}<br>
+    {{ form.status }}<br>
+    <button> Добавить выплату </button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'salary/base.html' %}
+
+{% block title %} Форма регистрации {% endblock %}
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button> Зарегистрироваться </button>
+</form>
+{% endblock %}

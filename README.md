@@ -1,0 +1,1 @@
+# cosmic_salary_v2

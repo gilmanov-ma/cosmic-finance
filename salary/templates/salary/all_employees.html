@@ -1,0 +1,64 @@
+{% extends 'salary/base.html' %}
+
+{% block title %} Сотрудники {% endblock %}
+
+{% block content %}
+<h2> Сотрудники: </h2>
+  <table class="table table-striped">
+  <tbody>
+    <tr>
+        <th> Имя </th>
+        <th> Фамилия </th>
+        <th> Должность </th>
+        <th> Отдел </th>
+        <th> Комментарий </th>
+        <th> Статус </th>
+        <th>  </th>
+    </tr>
+    {% for employee in page_obj %}
+    <tr>
+      {% if request.user.is_authenticated and not request.user.is_staff %}
+      {% if user.first_name  ==  employee.first_name  and user.last_name  ==  employee.last_name %}
+        <td><a href= "{{ employee.get_url_employees }}" > {{ employee.first_name }} </a> </td>
+        <td> {{ employee.last_name }} </td>
+        <td> {{ employee.post_name }} </td>
+        <td> {{ employee.department_id }} </td>
+        <td> {{ employee.comment }} </td>
+        <td> <a href= "{{ employee.get_id_to_update }}" > Редактировать </a> </td>
+        {% endif%}
+        {% else %}
+
+      <td><a href= "{{ employee.get_url_employees }}" > {{ employee.first_name }} </a> </td>
+        <td> {{ employee.last_name }} </td>
+        <td> {{ employee.post_name }} </td>
+        <td> {{ employee.department_id }} </td>
+        <td> {{ employee.comment }} </td>
+        <td> {{ employee.status }} </td>
+      <td> <a href= "{{ employee.get_id_to_update }}" > Редактировать </a> </td>
+        {% endif%}
+    </tr>
+    {% endfor %}
+  </table>
+<br>
+{% if request.user.is_authenticated and request.user.is_staff %}
+<a href= "{% url 'add_employee' %}" class="btn btn-lg btn-primary"> Добавить сотрудника </a>
+{% endif %}
+  <br>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

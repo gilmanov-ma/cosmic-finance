@@ -1,0 +1,51 @@
+{% extends 'salary/base.html' %}
+
+{% block title %} Клиенты {% endblock %}
+
+{% block content %}
+  <h2> Наши клиенты: </h2>
+ <table class="table table-striped">
+  <tbody>
+    <tr>
+        <th> Наименование клиента </th>
+        <th> Юр. лицо </th>
+        <th> Город </th>
+        <th> Статус </th>
+      <td> </td>
+    </tr>
+    {% for client in page_obj %}
+    <tr>
+        <td><a href= "{{ client.get_url_clients }}" > {{ client.client_name }} </a> </td>
+        <td> {{ client.official_name }} </td>
+        <td> {{ client.city }} </td>
+        <td> {{ client.is_still_client }} </td>
+      <td> <a href= "{{ client.get_id_to_update }}"> Редактировать </a> </td>
+    </tr>
+    {% endfor %}
+  </table>
+<td>
+  <br>
+  <a href= "{% url 'add_client' %}" class="btn btn-lg btn-primary"> Добавить клиента </a> </td>
+  <br>
+  <br>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+{% endblock %}
+

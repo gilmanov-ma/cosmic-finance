@@ -1,0 +1,10 @@
+{% extends 'salary/all_cash.html' %}
+
+{% block title %} Ошибка {% endblock %}
+
+{% block content %}
+
+  <h2> Неверно заполнена форма</h2>
+  <a href="{% url 'all_cash' %}"> Вернуться </a>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'salary/base.html' %}
+
+{% block title %} Добавить сумму {% endblock %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <input type="number" name="sum">
+    <button> Добавить  </button>
+</form>
+
+{% endblock %}

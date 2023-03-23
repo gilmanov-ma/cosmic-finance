@@ -1,0 +1,19 @@
+{% extends 'salary/base.html' %}
+
+{% block title %} Информация о {{ client.client_name }} {% endblock %}
+
+{% block content %}
+  <h2> Клиент </h2>
+  <h3> Название клиента: {{ client.client_name }} </h3>
+  <h3> Юридическое лицо: {{ client.official_name }} ИНН: {{ client.client_inn }} </h3>
+  <h3> Город: {{ client.city }} </h3>
+  <h3> Статус: {{ client.is_still_client }} </h3>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.is_still_client.label_tag }}<br>
+    {{ form.is_still_client }}<br>
+
+    <button> Изменить статус клиента </button>
+  </form>
+{% endblock %}

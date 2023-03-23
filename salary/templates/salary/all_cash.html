@@ -1,0 +1,76 @@
+{% extends 'salary/base.html' %}
+
+{% block title %} Поступления {% endblock %}
+
+{% block content %}
+  <h2> Поступления: </h2>
+    <a href= "{% url 'refresh_cash' %}"  class="btn btn-lg btn-primary"> Обновить  </a>
+<br>
+<br>
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <th> Клиент </th>
+        <th> Юр. лицо </th>
+        <th> Статья дохода </th>
+        <th> Сумма </th>
+        <th> Дата </th>
+        <th> Статус </th>
+        <th>  </th>
+      </tr>
+
+    {% for cash in page_obj %}
+      <tr>
+        <td> {{ cash.client_id.client_name }}  </td>
+        <td> {{ cash.client_id.official_name }} </td>
+        <td> {{ cash.income_item }} </td>
+        <td> {{ cash.income }} </td>
+        <td> {{ cash.date_time | date:"d.m.Y"}} </td>
+        <td>  {% if cash.status == "Распределить" %}
+            {% if cash.income_item == "--КУ Стартап--" or cash.income_item == "--КУ Бизнес--" or cash.income_item == "--КУ Мероприятия--"  or cash.income_item == "Покупка лидов"%}
+          <a href="{% url 'cash_detail' id_cash=cash.pk %}">  {{ cash.status }} </a> </td>
+              {% endif %}
+               {% endif %}
+        <td> <a href= "{{ cash.get_id_to_update }}"> Редактировать </a> </td>
+      </tr>
+    {% endfor %}
+
+  </table>
+<br>
+
+<a href= "{% url 'add_cash' %}"  class="btn btn-lg btn-primary"> Добавить поступление </a>
+<br>
+<br>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+<br>
+
+<h3> Фильтры </h3>
+<form method="GET">
+{% for elem in cash_filter.form %}
+{{ elem.label_tag }}
+{{ elem }}
+{% endfor %}
+<input type="submit" /> <br>
+</form>
+<br>
+<a href= "{% url 'all_cash' %}" class="btn btn-secondary btn-sm"> Сбросить фильтр </a>
+<br>
+
+
+{% endblock %}

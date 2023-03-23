@@ -1,0 +1,11 @@
+{% extends 'salary/base.html' %}
+
+{% block title %} Главная страница {% endblock %}
+
+{% block content %}
+  {{ chart | safe }}
+<div>
+<h2> Клиентов  </h2>
+  <h2>{{ clients_working }}</h2>
+</div>
+{% endblock %}

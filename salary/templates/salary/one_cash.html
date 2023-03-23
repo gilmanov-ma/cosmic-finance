@@ -1,0 +1,30 @@
+{% extends 'salary/base.html' %}
+
+{% block title %} Информация о платеже {% endblock %}
+
+{% block content %}
+    <h3> {{ cash.date_time | date:"d.m.Y"}} </h3>
+    <h3> {{ cash.client_id.official_name }} </h3>
+    <h3> {{ cash.income }} </h3>
+    <h3> {{ cash.income_item }} </h3>
+<br>
+<h5> Распределить платеж </h5>
+
+<form method="POST">
+    {% csrf_token %}
+        <p>Выбрать аккаунт-менеджера</p>
+    {{ form_list_accounts.account_manager }}
+    <br>
+    <br>
+        <p>Выбрать маркетолога</p>
+    {{ form_list_marketers.marketer_manager }}
+    <br>
+    <br>
+        <p>Выбрать продажника</p>
+    {{ form_list_sales.sales_manager }}
+    <br>
+    <br>
+    <button> Оплатить </button>
+</form>
+
+{% endblock %}
