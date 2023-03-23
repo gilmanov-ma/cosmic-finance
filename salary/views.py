@@ -853,20 +853,20 @@ class AddTax(View):
 def refresh_cash(request):
     """Кнопка обновления платежей"""
     headers = {
-        "Authorization": "Bearer t.XWDG_itNUWdYgpFs3UBxACoA4lKHeyBD745DwE5DdiGlR2jxWWFOlNdga1hP7n48buqu2RDtkakVCPIb3lj0OQ",
+        "Authorization": "TOKEN",
         "Content-Type": "application/json",
     }
     from_date = Cash.objects.latest('id').date_time.strftime("%Y-%m-%d")
     till_date = datetime.datetime.today().date().strftime("%Y-%m-%d")
     requests_cash = requests.get(
-        f"https://business.tinkoff.ru/openapi/api/v1/bank-statement?accountNumber=40802810400000534616&from={from_date}&till={till_date}",
+        f"https://business.tinkoff.ru/openapi/api/v1/bank-statement?accountNumber={account}&from={from_date}&till={till_date}",
         headers=headers,
         verify=False,
     )
     operations = requests_cash.json()["operation"]
 
     for i in range(len(operations)):
-        if operations[i]["payerAccount"] != "40802810400000534616":
+        if operations[i]["payerAccount"] != {account}:
             if operations[i]["operationId"] not in Cash.objects.all().values_list(
                 "operation_id", flat=True
             ):
